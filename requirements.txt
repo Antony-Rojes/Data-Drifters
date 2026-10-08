@@ -1,0 +1,8 @@
+flask
+google-genai
+python-dotenv
+pymupdf
+rank_bm25
+numpy
+chromadb
+pyarrow

@@ -1,0 +1,13 @@
+.env
+venv/
+__pycache__/
+*.pyc
+data/cache/
+data/uploads/
+data/archive/
+data/models/*.joblib
+server.log
+.pytest_cache/
+.DS_Store
+eval/results/*
+!eval/results/.gitkeep

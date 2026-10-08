@@ -1,0 +1,62 @@
+{
+  "about": "Each case = documents + questions with known correct sources. gold_quotes are short exact snippets of the passage(s) that answer the question (used for retrieval recall). answer_contains / answer_contains_any are checked in the answer text. expect_abstain = the documents do NOT contain the answer. Do not tune prompts on the heldout split.",
+  "cases": [
+    {
+      "case_id": "sample_theft_case",
+      "split": "heldout",
+      "documents": ["heldout/sample_theft_case/fir_214_2024.pdf",
+                    "heldout/sample_theft_case/arrest_memo.pdf",
+                    "heldout/sample_theft_case/remand_report.pdf"],
+      "drafts": ["bail_application"],
+      "expected_contradictions": ["12.03.2024", "13.03.2024"],
+      "queries": [
+        {"id": "S1", "query": "What is the FIR number and which police station registered it?",
+         "gold_quotes": ["F.I.R. No. 214/2024. Date of FIR"], "answer_contains": ["214/2024", "Civil Lines"]},
+        {"id": "S2", "query": "Under which sections of law is the accused charged?",
+         "gold_quotes": ["Sections 379/411 IPC"], "answer_contains": ["379", "411"]},
+        {"id": "S3", "query": "When was the accused arrested?",
+         "gold_quotes": ["arrested on 12.03.2024", "arrested on 13.03.2024"], "answer_contains": ["12.03.2024", "13.03.2024"]},
+        {"id": "S4", "query": "What property was stolen and what was its value?",
+         "gold_quotes": ["total value Rs. 45,000"], "answer_contains": ["45,000"]},
+        {"id": "S5", "query": "Who is the complainant in this case?",
+         "gold_quotes": ["Suresh Chand Gupta, son of Late Mohan Lal Gupta"], "answer_contains": ["Suresh Chand Gupta"]},
+        {"id": "S6", "query": "Where does the accused live?",
+         "gold_quotes": ["resident of 14/2 Katra Road"], "answer_contains": ["Katra Road"]},
+        {"id": "S7", "query": "Who is investigating the case?",
+         "gold_quotes": ["investigation is entrusted to SI Anil Verma", "Anil Verma, Investigating Officer"], "answer_contains": ["Anil Verma"]},
+        {"id": "S8", "query": "Was anything recovered from the accused?",
+         "gold_quotes": ["One Samsung mobile phone was recovered", "One Samsung mobile phone has been recovered"], "answer_contains": ["Samsung"]},
+        {"id": "S9", "query": "Does the accused have a previous criminal record?",
+         "gold_quotes": ["no previous criminal record"], "answer_contains": ["no previous criminal record"]},
+        {"id": "S10", "query": "How old is the accused?",
+         "gold_quotes": ["aged about 28 years", "aged 28 years"], "answer_contains": ["28"]},
+        {"id": "S11", "query": "Has any earlier bail application of the accused been rejected?",
+         "gold_quotes": [], "expect_abstain": true},
+        {"id": "S12", "query": "What is the name of the advocate representing the accused?",
+         "gold_quotes": [], "expect_abstain": true}
+      ]
+    },
+    {
+      "case_id": "dev_surrender_bail",
+      "split": "dev",
+      "documents": ["heldout/dev_surrender_bail/Test_1.pdf"],
+      "drafts": ["bail_application"],
+      "queries": [
+        {"id": "D1", "query": "Who are the accused persons?",
+         "gold_quotes": ["Smt. Sabitri Sarkar"], "answer_contains": ["Sabitri Sarkar", "Dipak Kumar Dey", "Proloy Sarkar"]},
+        {"id": "D2", "query": "How is accused no. 2 related to accused no. 1?",
+         "gold_quotes": ["Family Friend of the Accused Person No. 1"], "answer_contains_any": ["friend"]},
+        {"id": "D3", "query": "Before which court is the petition filed?",
+         "gold_quotes": ["Additional Chief Judicial Magistrate at Barasat"], "answer_contains": ["Barasat"]},
+        {"id": "D4", "query": "Where does accused no. 1 reside?",
+         "gold_quotes": ["PIN 700129"], "answer_contains": ["700129"]},
+        {"id": "D5", "query": "What is the case number?",
+         "gold_quotes": ["Case No.- /2018"], "answer_contains_any": ["blank", "information needed", "not mentioned", "not stated"]},
+        {"id": "D6", "query": "On what date were the accused arrested?",
+         "gold_quotes": [], "expect_abstain": true},
+        {"id": "D7", "query": "What is the occupation of accused no. 3?",
+         "gold_quotes": ["Self- Employee"], "answer_contains_any": ["self"]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agentic Legal Assistant</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 21h14M6 7h12M6 7l-3 7a3 3 0 0 0 6 0L6 7zm12 0l-3 7a3 3 0 0 0 6 0l-3-7z"/></svg>
+      </span>
+      <div>
+        <h1>Agentic Legal Assistant</h1>
+        <p>Every fact traced to its source</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span class="case-chip" id="caseChip" title="Current case">No case</span>
+      <button class="btn btn-ghost" id="downloadBtn" type="button" disabled>Download JSON</button>
+      <button class="btn btn-danger-ghost" id="resetBtn" type="button">New case</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <ol class="steps" aria-label="Workflow">
+      <li class="step is-active" aria-current="step"><span class="step-num">1</span> Upload</li>
+      <li class="step is-soon"><span class="step-num">2</span> Analyze <small>soon</small></li>
+      <li class="step is-soon"><span class="step-num">3</span> Draft <small>soon</small></li>
+    </ol>
+
+    <section class="stats" aria-label="Case summary">
+      <div class="stat"><span class="stat-value" id="statDocs">0</span><span class="stat-label">Documents</span></div>
+      <div class="stat"><span class="stat-value" id="statPages">0</span><span class="stat-label">Pages</span></div>
+      <div class="stat"><span class="stat-value" id="statChunks">0</span><span class="stat-label">Chunks</span></div>
+      <div class="stat"><span class="stat-value" id="statFacts">0</span><span class="stat-label">Facts found</span></div>
+      <div class="stat stat-warn"><span class="stat-value" id="statMissing">0</span><span class="stat-label">Missing fields</span></div>
+    </section>
+
+    <section class="card" aria-labelledby="uploadTitle">
+      <div class="card-head">
+        <h2 id="uploadTitle">Upload case documents</h2>
+        <span class="muted">PDF only, up to 25 MB each</span>
+      </div>
+
+      <div class="dropzone" id="dropzone" role="button" tabindex="0"
+           aria-label="Choose PDF files or drag them here">
+        <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5l5 5M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+        <p class="dz-title">Drag PDFs here or <span class="link">browse</span></p>
+        <p class="muted">Text is read directly from the PDF. Scanned pages are read with OCR.</p>
+        <input type="file" id="fileInput" accept="application/pdf,.pdf" multiple hidden>
+      </div>
+
+      <div id="queueWrap" hidden>
+        <div class="queue-head">
+          <h3>Upload queue</h3>
+          <button class="btn btn-link" id="clearQueueBtn" type="button">Clear finished</button>
+        </div>
+        <ul class="queue" id="queue" aria-live="polite"></ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="docsTitle">
+      <div class="section-head">
+        <h2 id="docsTitle">Documents in this case <span class="count" id="docCount"></span></h2>
+        <div class="filters" id="filterBar" hidden>
+          <input type="search" id="search" placeholder="Search fields or values" aria-label="Search fields or values">
+          <label class="toggle"><input type="checkbox" id="missingOnly"> Missing only</label>
+        </div>
+      </div>
+      <div id="docs"></div>
+    </section>
+
+  </main>
+
+  <div class="overlay" id="overlay" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="drawerTitle">
+    <header class="drawer-head">
+      <div>
+        <h2 id="drawerTitle">Source</h2>
+        <p class="muted" id="drawerSub"></p>
+      </div>
+      <button class="btn btn-ghost" id="drawerClose" type="button" aria-label="Close source panel">Close</button>
+    </header>
+    <div class="drawer-body" id="drawerBody"></div>
+  </aside>
+
+  <dialog id="resetDialog">
+    <form method="dialog">
+      <h2>Start a new case?</h2>
+      <p class="muted">The current documents will be saved to the archive folder and the case will be emptied.</p>
+      <div class="dialog-actions">
+        <button class="btn btn-ghost" value="cancel">Cancel</button>
+        <button class="btn btn-danger" value="confirm">Start new case</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts"></div>
+
+  <script src="/static/js/upload.js"></script>
+</body>
+</html>
