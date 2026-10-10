@@ -20,7 +20,7 @@ python -m pip install -r requirements.txt
 copy .env.example .env      # then open .env and paste your Gemini API key
 python app.py
 ```
-Open http://127.0.0.1:5000
+
 
 ## Using the dashboard
 1. **Upload** one or more PDFs of the same case.
