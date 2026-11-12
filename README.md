@@ -1,5 +1,3 @@
-https://chatgpt.com/share/6af52fd6-3a44-83ee-a660-830b718908e7?ogimg=plain
-
 # Agentic Legal Assistant (HACKNEX 2026, HNX26EPS01), Team Data Drifters
 
 Upload case PDFs, get a missing-info and contradiction report, generate a bail application, legal notice or affidavit, and ask questions. **Every fact carries a clickable citation (chunk ID + exact quote), and a Python validator removes anything it cannot verify.**
